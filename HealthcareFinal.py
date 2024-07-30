@@ -7,5 +7,5 @@ try:
     print(df.head())
 except pd.errors.ParserError as e:
     print(f"ParserError: {e}")
-fig = px.bar(df,x='Year',y='Deaths')
+fig = px.bar(df,year='Year',val='Deaths')
 st.plotly_chart(fig)
