@@ -7,4 +7,3 @@ try:
     print(df.head())
 except pd.errors.ParserError as e:
     print(f"ParserError: {e}")
-st.title(df)
