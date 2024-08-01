@@ -17,7 +17,7 @@ page = st.sidebar.radio("Go to", ["Home", "EDA", "Conclusion"])
 
 # Home page
 if page == "Home":
-    st.image("C:\\Users\\Hadil Fares\\OneDrive - American University of Beirut\\Desktop\\hadil\\Healthcare Analytics\\AUBlogo.png", use_column_width=True)
+    st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/AUBlogo.png", use_column_width=True)
     st.title("Diabetes Type 2 Mortality in the MENA Region: A Comparative Analysis of Regional and Global Trends")
     st.subheader("**Healthcare Analytics**\n**Dr. Samar El-hajj**")
     st.write("**Hadil Fares**")
