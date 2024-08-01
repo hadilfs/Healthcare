@@ -20,7 +20,6 @@ if page == "Home":
     st.title("Diabetes Type 2 Mortality in the MENA Region: A Comparative Analysis of Regional and Global Trends")
     st.subheader("Healthcare Analytics Dr. Samar El-hajj")
     st.write("Hadil Fares, Tina Chalhoub, Rawan Hallal")
-    st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/AUBlogo.png", use_column_width=True)
 
 # EDA page
 elif page == "EDA":
