@@ -19,9 +19,7 @@ page = st.sidebar.radio("Go to", ["Home", "EDA", "Conclusion"])
 if page == "Home":
      st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/AUBlogo.png", use_column_width=True)
      st.markdown("<h1 style='text-align: center;'>Diabetes Type 2 Mortality in the MENA Region: A Comparative Analysis of Regional and Global Trends</h1>", unsafe_allow_html=True)
-    
-    # Center the subtitle and names
-    st.markdown("""
+     st.markdown("""
     <div style='text-align: center;'>
         <h2>Healthcare Analytics</h2>
         <h3>Dr. Samar El-hajj</h3>
