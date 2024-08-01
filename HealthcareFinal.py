@@ -17,12 +17,19 @@ page = st.sidebar.radio("Go to", ["Home", "EDA", "Conclusion"])
 
 # Home page
 if page == "Home":
-    st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/AUBlogo.png", use_column_width=True)
-    st.title("Diabetes Type 2 Mortality in the MENA Region: A Comparative Analysis of Regional and Global Trends")
-    st.subheader("**Healthcare Analytics**\n**Dr. Samar El-hajj**")
-    st.write("**Hadil Fares**")
-    st.write("**Tina Chalhoub**")
-    st.write("**Rawan Hallal**")
+ # Center the title
+    st.markdown("<h1 style='text-align: center;'>Diabetes Type 2 Mortality in the MENA Region: A Comparative Analysis of Regional and Global Trends</h1>", unsafe_allow_html=True)
+    
+    # Center the subtitle and names
+    st.markdown("""
+    <div style='text-align: center;'>
+        <h2>Healthcare Analytics</h2>
+        <h3>Dr. Samar El-hajj</h3>
+        <p><strong>Hadil Fares</strong><br>
+        <strong>Tina Chalhoub</strong><br>
+        <strong>Rawan Hallal</strong></p>
+    </div>
+    """, unsafe_allow_html=True)
     
 # EDA page
 elif page == "EDA":
