@@ -41,7 +41,6 @@ elif page == "EDA":
     plt.ylabel('Deaths (Percent)')
     plt.yticks([])
     st.pyplot(plt)
-    st.write("**Explanation**")
 
     st.subheader("Distribution of Deaths by Age Group")
     df_sorted = df1.sort_values('age')
@@ -52,7 +51,6 @@ elif page == "EDA":
     plt.ylabel('Deaths (Percent)')
     plt.yticks([])
     st.pyplot(plt)
-    st.write("**Explanation**")
     
     st.subheader("Deaths by Diabetes Type 2 Over Time Globally")
     mena_data = df1.groupby('year')['val'].sum().reset_index()
@@ -64,7 +62,6 @@ elif page == "EDA":
     plt.yticks([])
     plt.grid(False)
     st.pyplot(plt)
-    st.write("**Explanation**")
     
     st.subheader("Distribution of Risk Factors Globally")
     risk_factors = df1.groupby('rei')['val'].sum().reset_index()
@@ -83,7 +80,6 @@ elif page == "EDA":
         margin=dict(t=50, b=50, l=50, r=50)
     )
     st.plotly_chart(fig)
-    st.write("**Explanation**")
     
     st.subheader("Correlation Between Risk Factors and Deaths by Diabetes Type 2")
     plt.figure(figsize=(12, 6))
@@ -91,7 +87,6 @@ elif page == "EDA":
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
     plt.title('Correlation Between Risk Factors and Deaths by Diabetes Type 2')
     st.pyplot(plt)
-    st.write("**Explanation**")
     
     st.subheader("Distribution of Deaths by Region")
     region_distribution = df1.groupby('location')['val'].sum().reset_index()
@@ -104,7 +99,6 @@ elif page == "EDA":
     plt.xticks([])
     plt.grid(axis='y', linestyle='', alpha=0.7)
     st.pyplot(plt)
-    st.write("**Explanation**")
     
     st.subheader("Total Deaths by Year in the MENA Region")
     mena_data = df.groupby('year')['val'].sum().reset_index()
@@ -116,7 +110,6 @@ elif page == "EDA":
     plt.yticks([])
     plt.grid(False)
     st.pyplot(plt)
-    st.write("**Explanation**")
     
     st.subheader("Trends in Deaths by Diabetes Type 2 Over Time")
     plt.figure(figsize=(16, 12))
@@ -134,7 +127,6 @@ elif page == "EDA":
     plt.ylabel('Deaths (Percent)')
     plt.yticks([])
     st.pyplot(plt)
-    st.write("**Explanation**")
     
     st.subheader("Distribution of Deaths by Country in the MENA Region")
     country_distribution = df.groupby('location')['val'].sum().reset_index()
@@ -151,7 +143,6 @@ elif page == "EDA":
     plt.title('Distribution of Deaths by Country in the MENA Region')
     plt.axis('equal')
     st.pyplot(plt)
-    st.write("**Explanation**")
 
 # Conclusion page
 elif page == "Conclusion":
@@ -180,3 +171,6 @@ elif page == "Conclusion":
     **Conclusion Summary:**
     The findings from the Exploratory Data Analysis (EDA) underscore the complexity of diabetes Type 2 mortality across different demographics and regions. Addressing this global health challenge requires a multi-faceted approach that includes gender-neutral interventions, targeted age-specific programs, global and regional health initiatives, and comprehensive healthcare strategies. By focusing on both clinical and economic aspects, we can better manage and reduce the impact of diabetes Type 2, ultimately improving health outcomes and reducing the burden on healthcare systems worldwide.
     """)
+    st.subheader("A Future Forecast of Deaths by Diabetes Type 2 in the MENA Region")
+    st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/forecastingResult.png", use_column_width=True)
+    st.write("""Our forecasting analysis of Type 2 Diabetes mortality rates in the MENA region reveals a notable trend: the forecast indicates that the high levels of mortality observed in recent years are expected to persist into the foreseeable future. The analysis shows that after an initial period of increasing mortality, the rates have stabilized at elevated levels. This suggests that, barring significant public health interventions or changes in risk factors, the high mortality rates associated with Type 2 Diabetes are likely to remain constant in the coming years. Addressing this issue will require sustained efforts and targeted health policies to mitigate the impact and improve long-term outcomes.""")
