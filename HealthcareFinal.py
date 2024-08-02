@@ -156,26 +156,52 @@ elif page == "EDA":
 elif page == "Conclusion":
      st.title("Conclusion and Findings")
      st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/diabetesImage.jpg", use_column_width=True)
-     st.write("### Conclusion
-
-**1. Gender Differences in Diabetes Type 2 Mortality:**
-The side-by-side boxplot analysis reveals that mortality rates due to diabetes Type 2 are similar across genders, indicating that both males and females are equally affected. This suggests that public health interventions should adopt a gender-neutral approach, focusing on comprehensive strategies that address the broader population rather than targeting specific genders.
-
-**2. Age Group Analysis:**
-The data highlights a troubling trend with the highest percentage of deaths occurring in the 20-24 years age group. This alarming finding underscores the need for targeted awareness programs and health initiatives aimed at young adults. Enhancing early detection, promoting healthy lifestyles, and implementing educational programs in schools and colleges are crucial steps in addressing this issue.
-
-**3. Global Trends in Diabetes Type 2 Mortality:**
-The global analysis shows a rising trend in diabetes Type 2 mortality from 2011 to 2020, with a notable dip in 2018 followed by a sharp increase. This suggests a growing global burden of diabetes, with potential impacts from external factors such as pandemics. Strengthening global health initiatives, improving data quality, and advocating for effective public health policies are essential to address this trend.
-
-**4. Regional Risk Factors in MENA:**
-The treemap and heatmap analyses highlight that high body-mass index (BMI) is the dominant risk factor in the MENA region, with significant correlations to poor dietary choices and low physical activity. Addressing obesity through lifestyle interventions, promoting healthier diets, and increasing physical activity are vital for reducing diabetes-related deaths in the region.
-
-**5. Regional and Country-Specific Trends:**
-The horizontal bar chart and regional trend analysis reveal varying mortality rates across regions and countries. North America and MENA exhibit high mortality rates, while East Asia and Sub-Saharan Africa show lower rates. The need for tailored public health strategies and regional collaborations is evident to effectively manage diabetes across different socio-economic and cultural contexts.
-
-**6. Healthcare System Challenges and Strategies:**
-Access to care, quality of healthcare, and financial burdens are key challenges in the MENA region. Implementing telemedicine, improving healthcare quality through standardized protocols and training, and reducing costs through generic medications and preventive care are crucial strategies. Expanding health insurance, fostering public-private partnerships, and leveraging digital health solutions will further support effective diabetes management.
-
-**Conclusion Summary:**
-The findings from the Exploratory Data Analysis (EDA) underscore the complexity of diabetes Type 2 mortality across different demographics and regions. Addressing this global health challenge requires a multi-faceted approach that includes gender-neutral interventions, targeted age-specific programs, global and regional health initiatives, and comprehensive healthcare strategies. By focusing on both clinical and economic aspects, we can better manage and reduce the impact of diabetes Type 2, ultimately improving health outcomes and reducing the burden on healthcare systems worldwide.")
+     st.subheader("1. Gender Differences in Diabetes Type 2 Mortality:")
+    st.write(
+        "The side-by-side boxplot analysis reveals that mortality rates due to diabetes Type 2 are similar across genders, "
+        "indicating that both males and females are equally affected. This suggests that public health interventions should "
+        "adopt a gender-neutral approach, focusing on comprehensive strategies that address the broader population rather than targeting specific genders."
+    )
     
+    st.subheader("2. Age Group Analysis:")
+    st.write(
+        "The data highlights a troubling trend with the highest percentage of deaths occurring in the 20-24 years age group. "
+        "This alarming finding underscores the need for targeted awareness programs and health initiatives aimed at young adults. "
+        "Enhancing early detection, promoting healthy lifestyles, and implementing educational programs in schools and colleges are crucial steps in addressing this issue."
+    )
+    
+    st.subheader("3. Global Trends in Diabetes Type 2 Mortality:")
+    st.write(
+        "The global analysis shows a rising trend in diabetes Type 2 mortality from 2011 to 2020, with a notable dip in 2018 followed by a sharp increase. "
+        "This suggests a growing global burden of diabetes, with potential impacts from external factors such as pandemics. "
+        "Strengthening global health initiatives, improving data quality, and advocating for effective public health policies are essential to address this trend."
+    )
+    
+    st.subheader("4. Regional Risk Factors in MENA:")
+    st.write(
+        "The treemap and heatmap analyses highlight that high body-mass index (BMI) is the dominant risk factor in the MENA region, "
+        "with significant correlations to poor dietary choices and low physical activity. Addressing obesity through lifestyle interventions, "
+        "promoting healthier diets, and increasing physical activity are vital for reducing diabetes-related deaths in the region."
+    )
+    
+    st.subheader("5. Regional and Country-Specific Trends:")
+    st.write(
+        "The horizontal bar chart and regional trend analysis reveal varying mortality rates across regions and countries. "
+        "North America and MENA exhibit high mortality rates, while East Asia and Sub-Saharan Africa show lower rates. "
+        "The need for tailored public health strategies and regional collaborations is evident to effectively manage diabetes across different socio-economic and cultural contexts."
+    )
+    
+    st.subheader("6. Healthcare System Challenges and Strategies:")
+    st.write(
+        "Access to care, quality of healthcare, and financial burdens are key challenges in the MENA region. Implementing telemedicine, "
+        "improving healthcare quality through standardized protocols and training, and reducing costs through generic medications and preventive care are crucial strategies. "
+        "Expanding health insurance, fostering public-private partnerships, and leveraging digital health solutions will further support effective diabetes management."
+    )
+    
+    st.write(
+        "### Conclusion Summary:\n"
+        "The findings from the Exploratory Data Analysis (EDA) underscore the complexity of diabetes Type 2 mortality across different demographics and regions. "
+        "Addressing this global health challenge requires a multi-faceted approach that includes gender-neutral interventions, targeted age-specific programs, "
+        "global and regional health initiatives, and comprehensive healthcare strategies. By focusing on both clinical and economic aspects, we can better manage and reduce "
+        "the impact of diabetes Type 2, ultimately improving health outcomes and reducing the burden on healthcare systems worldwide."
+    )
