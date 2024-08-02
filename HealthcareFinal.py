@@ -64,7 +64,7 @@ elif page == "EDA":
     plt.yticks([])
     plt.grid(False)
     st.pyplot(plt)
-   st.write("Explanation")
+     st.write("Explanation")
     
     st.subheader("Distribution of Risk Factors Globally")
     risk_factors = df1.groupby('rei')['val'].sum().reset_index()
