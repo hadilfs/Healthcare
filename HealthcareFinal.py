@@ -155,6 +155,7 @@ elif page == "EDA":
 
 # Conclusion page
 elif page == "Conclusion":
-    st.title("Conclusion and Findings")
-    st.write("**Explanation and findings will be added here**")
+     st.title("Conclusion and Findings")
+     st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/diabetesImage.png", use_column_width=True)
+     st.write("**Explanation and findings will be added here**")
     
