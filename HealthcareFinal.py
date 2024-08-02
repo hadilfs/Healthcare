@@ -1,9 +1,3 @@
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 # Load your data
 import pandas as pd
 import streamlit as st
@@ -181,4 +175,8 @@ elif page == "Conclusion":
     The horizontal bar chart and regional trend analysis reveal varying mortality rates across regions and countries. North America and MENA exhibit high mortality rates, while East Asia and Sub-Saharan Africa show lower rates. The need for tailored public health strategies and regional collaborations is evident to effectively manage diabetes across different socio-economic and cultural contexts.
     
     **6. Healthcare System Challenges and Strategies:**
-    Access to care, quality of healthcare,
+    Access to care, quality of healthcare, and financial burdens are key challenges in the MENA region. Implementing telemedicine, improving healthcare quality through standardized protocols and training, and reducing costs through generic medications and preventive care are crucial strategies. Expanding health insurance, fostering public-private partnerships, and leveraging digital health solutions will further support effective diabetes management.
+    
+    **Conclusion Summary:**
+    The findings from the Exploratory Data Analysis (EDA) underscore the complexity of diabetes Type 2 mortality across different demographics and regions. Addressing this global health challenge requires a multi-faceted approach that includes gender-neutral interventions, targeted age-specific programs, global and regional health initiatives, and comprehensive healthcare strategies. By focusing on both clinical and economic aspects, we can better manage and reduce the impact of diabetes Type 2, ultimately improving health outcomes and reducing the burden on healthcare systems worldwide.
+    """)
