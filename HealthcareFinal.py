@@ -200,7 +200,7 @@ elif page == "Dashboard":
         )
         fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
         fig.update_layout(
-            width=1700,
+            width=2000,
             height=200,
             margin=dict(t=20, b=20, l=20, r=20)
         )
