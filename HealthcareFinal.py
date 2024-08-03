@@ -189,7 +189,6 @@ elif page == "Dashboard":
             risk_factors,
             path=['rei'],
             values='val',
-            title='Distribution of Risk Factors Globally',
             color='val',
             color_continuous_scale='Reds'
         )
@@ -206,7 +205,6 @@ elif page == "Dashboard":
         plt.figure(figsize=(6, 4))
         correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
-        plt.title('Correlation Between Risk Factors and Deaths by Diabetes Type 2')
         st.pyplot(plt)
 
 # Conclusion page
