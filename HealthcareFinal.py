@@ -208,7 +208,7 @@ elif page == "Dashboard":
     
     with col5:
         st.markdown("<h5 style='text-align: center;'>Correlation Between Risk Factors and Deaths by Diabetes Type 2</h5>", unsafe_allow_html=True)
-        plt.figure(figsize=(plot_width / 120, plot_height / 90))
+        plt.figure(figsize=(plot_width / 90, plot_height / 120))
         correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
         st.pyplot(plt)
