@@ -44,16 +44,16 @@ elif page == "EDA":
     st.title("Exploratory Data Analysis")
     
     # Other EDA plots and visualizations
-    st.subheader("Deaths by Diabetes Type 2 by Sex")
+    st.subheader("Deaths by Diabetes Type 2 by Sex Globally")
     plt.figure(figsize=(6, 4))
-    sns.boxplot(x='sex', y='val', data=df1, palette=['#8B0000', '#d19999'])
+    sns.boxplot(x='sex', y='val', data=df1, hue='sex', palette=['#8B0000', '#d19999'], legend=False)
     plt.title('Deaths by Diabetes Type 2 by Sex')
     plt.xlabel('Sex')
     plt.ylabel('Deaths (Percent)')
     plt.yticks([])
     st.pyplot(plt)
 
-    st.subheader("Distribution of Deaths by Age Group")
+    st.subheader("Distribution of Deaths by Age Group Globally")
     df_sorted = df1.sort_values('age')
     plt.figure(figsize=(14, 6))
     sns.barplot(x='age', y='val', data=df_sorted, color='#8B0000', errorbar=None)
@@ -74,31 +74,6 @@ elif page == "EDA":
     plt.grid(False)
     st.pyplot(plt)
     
-    st.subheader("Distribution of Risk Factors Globally")
-    risk_factors = df1.groupby('rei')['val'].sum().reset_index()
-    fig = px.treemap(
-        risk_factors,
-        path=['rei'],
-        values='val',
-        title='Distribution of Risk Factors Globally',
-        color='val',
-        color_continuous_scale='Reds'
-    )
-    fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
-    fig.update_layout(
-        width=900,
-        height=500,
-        margin=dict(t=50, b=50, l=50, r=50)
-    )
-    st.plotly_chart(fig)
-    
-    st.subheader("Correlation Between Risk Factors")
-    plt.figure(figsize=(12, 6))
-    correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
-    plt.title('Correlation Between Risk Factors and Deaths by Diabetes Type 2')
-    st.pyplot(plt)
-    
     st.subheader("Distribution of Deaths by Region")
     region_distribution = df1.groupby('location')['val'].sum().reset_index()
     region_distribution = region_distribution.sort_values('val', ascending=False)
@@ -106,23 +81,21 @@ elif page == "EDA":
     plt.barh(region_distribution['location'], region_distribution['val'], color='#8B0000')
     plt.xlabel('Total Deaths (Percent)')
     plt.ylabel('Region')
-    plt.title('Distribution of Deaths by Region')
     plt.xticks([])
     plt.grid(axis='y', linestyle='', alpha=0.7)
     st.pyplot(plt)
-    
+
     st.subheader("Total Deaths by Year in the MENA Region")
     mena_data = df.groupby('year')['val'].sum().reset_index()
     plt.figure(figsize=(10, 6))
     plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
-    plt.title('Total Deaths by Year in the MENA Region')
     plt.xlabel('Year')
     plt.ylabel('Total Deaths (Percent)')
     plt.yticks([])
     plt.grid(False)
     st.pyplot(plt)
-    
-    st.subheader("Trends in Deaths by Diabetes Type 2 Over Time")
+
+    st.subheader("Trends in Deaths by Diabetes Type 2 Over Time in Each MENA Region Country")
     plt.figure(figsize=(16, 12))
     ax = sns.lineplot(x='year', y='val', hue='location', data=df, errorbar=None, legend=False)
     locations = df['location'].unique()
@@ -133,48 +106,34 @@ elif page == "EDA":
         y_data = line.get_ydata()
         if len(x_data) > 0 and len(y_data) > 0:
             ax.text(x_data[-1], y_data[-1], location, color=color, ha='left', va='center', fontsize=10)
-    plt.title('Trends in Deaths by Diabetes Type 2 Over Time')
     plt.xlabel('Year')
     plt.ylabel('Deaths (Percent)')
     plt.yticks([])
     st.pyplot(plt)
-    
-    st.subheader("Distribution of Deaths by Country in the MENA Region")
-    country_distribution = df.groupby('location')['val'].sum().reset_index()
-    country_distribution = country_distribution.sort_values('val', ascending=False)
-    num_colors = len(country_distribution)
-    colors = plt.cm.Reds([i / num_colors for i in range(num_colors)])
-    plt.figure(figsize=(10, 5))
-    plt.pie(
-        country_distribution['val'], 
-        labels=country_distribution['location'], 
-        colors=colors, 
-        startangle=140
-    )
-    plt.title('Distribution of Deaths by Country in the MENA Region')
-    plt.axis('equal')
-    st.pyplot(plt)
 
-    st.subheader("Choropleth Map of Diabetes Type 2 Mortality in the MENA Region")
-    # Filter selection
-    year = st.slider("Select Year", int(df['year'].min()), int(df['year'].max()), step=1)
-   
+    # Group by 'year' and 'location_name', and sum the 'val' column
+    grouped_df = df.groupby(['year', 'location'], as_index=False)['val'].sum()
+
+    # Streamlit UI elements for year selection
+    st.subheader("Distribution of Deaths by Diabetes Type 2 by Country in the MENA Region")
+    year = st.slider("Select Year", int(grouped_df['year'].min()), int(grouped_df['year'].max()), step=1)
+
     # Filter data
-    filtered_data = df[df['year'] == year]
-    
+    filtered_data = grouped_df[grouped_df['year'] == year]
+
     # Rename columns to match shapefile
     filtered_data = filtered_data.rename(columns={'location': 'name', 'val': 'death_rate'})
-    
+
     # Merging filtered data with shapefile data
     merged_data = mena_shapefile.merge(filtered_data, left_on='name', right_on='name', how='left')
-    
+
     # Map Visualization using Folium
     m = folium.Map(location=[25, 45], zoom_start=4)
-    
+
     # Define the color scale
     colormap = linear.Reds_09.scale(filtered_data['death_rate'].min(), filtered_data['death_rate'].max())
     colormap.caption = 'Total Deaths (Percent)'
-    
+
     # Adding the merged GeoDataFrame to the map with a color scale and tooltips
     Choropleth(
         geo_data=merged_data,
@@ -186,7 +145,7 @@ elif page == "EDA":
         line_opacity=0.2,
         legend_name='Total Deaths (Percent)'
     ).add_to(m)
-    
+
     # Add tooltips to show the rate on hover
     folium.GeoJson(
         merged_data,
@@ -202,12 +161,35 @@ elif page == "EDA":
             localize=True
         )
     ).add_to(m)
-    
+
     # Add colormap to the map
     colormap.add_to(m)
-    
+
     # Display the map
     st_folium(m, width=700, height=500)
+
+    st.subheader("Distribution of Risk Factors in the MENA Region")
+    risk_factors = df.groupby('rei')['val'].sum().reset_index()
+    fig = px.treemap(
+        risk_factors,
+        path=['rei'],
+        values='val',
+        color='val',
+        color_continuous_scale='Reds'
+    )
+    fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
+    fig.update_layout(
+        width=900,
+        height=500,
+        margin=dict(t=50, b=50, l=50, r=50)
+    )
+    st.plotly_chart(fig)
+    
+    st.subheader("Correlation Between Risk Factors in the MENA Region")
+    plt.figure(figsize=(12, 6))
+    correlation_matrix = df.pivot_table(index='location', columns='rei', values='val').corr()
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+    st.pyplot(plt)
     
 
 # Dashboard page
@@ -255,8 +237,8 @@ elif page == "Dashboard":
     col4, col5 = st.columns([1, 1])
 
     with col4:
-        st.markdown("<h6 style='text-align: center; font-size: 14px;'>Distribution of Risk Factors Globally</h6>", unsafe_allow_html=True)
-        risk_factors = df1.groupby('rei')['val'].sum().reset_index()
+        st.markdown("<h6 style='text-align: center; font-size: 14px;'>Distribution of Risk Factors in the MENA Region</h6>", unsafe_allow_html=True)
+        risk_factors = df.groupby('rei')['val'].sum().reset_index()
         fig = px.treemap(
             risk_factors,
             path=['rei'],
@@ -273,9 +255,9 @@ elif page == "Dashboard":
         st.plotly_chart(fig)
     
     with col5:
-        st.markdown("<h6 style='text-align: center; font-size: 14px;'>Correlation Between Risk Factors 2</h6>", unsafe_allow_html=True)
+        st.markdown("<h6 style='text-align: center; font-size: 14px;'>Correlation Between Risk Factors in the MENA Region</h6>", unsafe_allow_html=True)
         plt.figure(figsize=(plot_width / 90, plot_height / 100))
-        correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
+        correlation_matrix = df.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
         st.pyplot(plt)
 # Conclusion page
