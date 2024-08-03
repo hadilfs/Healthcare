@@ -1,8 +1,14 @@
 import pandas as pd
-import streamlit as st
-import seaborn as sns
+import folium
+from folium import Choropleth
+from folium.plugins import FloatImage
+from branca.colormap import linear
+from streamlit_folium import st_folium
+import geopandas as gpd
 import matplotlib.pyplot as plt
+import seaborn as sns
 import plotly.express as px
+import streamlit as st
 
 # Load your data
 df = pd.read_csv("https://raw.githubusercontent.com/hadilfs/Healthcare/main/combined_data.csv")
@@ -10,6 +16,10 @@ df = df[df['val'] > 0]
 
 df1 = pd.read_csv("https://raw.githubusercontent.com/hadilfs/Healthcare/main/AllRegions.csv")
 df1 = df1[df1['val'] > 0]
+
+# Load the shapefile for MENA region
+shapefile_url = "https://raw.githubusercontent.com/hadilfs/Healthcare/main/MENA.geo.json"
+mena_shapefile = gpd.read_file(shapefile_url)
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
@@ -33,6 +43,7 @@ if page == "Home":
 elif page == "EDA":
     st.title("Exploratory Data Analysis")
     
+    # Other EDA plots and visualizations
     st.subheader("Deaths by Diabetes Type 2 by Sex")
     plt.figure(figsize=(6, 4))
     sns.boxplot(x='sex', y='val', data=df1, palette=['#8B0000', '#d19999'])
@@ -81,7 +92,7 @@ elif page == "EDA":
     )
     st.plotly_chart(fig)
     
-    st.subheader("Correlation Between Risk Factors and Deaths by Diabetes Type 2")
+    st.subheader("Correlation Between Risk Factors")
     plt.figure(figsize=(12, 6))
     correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
@@ -143,6 +154,61 @@ elif page == "EDA":
     plt.title('Distribution of Deaths by Country in the MENA Region')
     plt.axis('equal')
     st.pyplot(plt)
+
+    st.subheader("Choropleth Map of Diabetes Type 2 Mortality in the MENA Region")
+    # Filter selection
+    year = st.slider("Select Year", int(df['year'].min()), int(df['year'].max()), step=1)
+   
+    # Filter data
+    filtered_data = df[df['year'] == year]
+    
+    # Rename columns to match shapefile
+    filtered_data = filtered_data.rename(columns={'location': 'name', 'val': 'death_rate'})
+    
+    # Merging filtered data with shapefile data
+    merged_data = mena_shapefile.merge(filtered_data, left_on='name', right_on='name', how='left')
+    
+    # Map Visualization using Folium
+    m = folium.Map(location=[25, 45], zoom_start=4)
+    
+    # Define the color scale
+    colormap = linear.Reds_09.scale(filtered_data['death_rate'].min(), filtered_data['death_rate'].max())
+    colormap.caption = 'Total Deaths (Percent)'
+    
+    # Adding the merged GeoDataFrame to the map with a color scale and tooltips
+    Choropleth(
+        geo_data=merged_data,
+        data=filtered_data,
+        columns=['name', 'death_rate'],
+        key_on='feature.properties.name',
+        fill_color='Reds',
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name='Total Deaths (Percent)'
+    ).add_to(m)
+    
+    # Add tooltips to show the rate on hover
+    folium.GeoJson(
+        merged_data,
+        style_function=lambda feature: {
+            'fillColor': colormap(feature['properties']['death_rate']) if feature['properties']['death_rate'] else 'gray',
+            'color': 'black',
+            'weight': 1,
+            'fillOpacity': 0.7,
+        },
+        tooltip=folium.GeoJsonTooltip(
+            fields=['name', 'death_rate'],
+            aliases=['Country:', 'Rate:'],
+            localize=True
+        )
+    ).add_to(m)
+    
+    # Add colormap to the map
+    colormap.add_to(m)
+    
+    # Display the map
+    st_folium(m, width=700, height=500)
+    
 
 # Dashboard page
 elif page == "Dashboard":
@@ -207,13 +273,11 @@ elif page == "Dashboard":
         st.plotly_chart(fig)
     
     with col5:
-        st.markdown("<h6 style='text-align: center; font-size: 14px;'>Correlation Between Risk Factors and Deaths by Diabetes Type 2</h6>", unsafe_allow_html=True)
+        st.markdown("<h6 style='text-align: center; font-size: 14px;'>Correlation Between Risk Factors 2</h6>", unsafe_allow_html=True)
         plt.figure(figsize=(plot_width / 90, plot_height / 100))
         correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
         st.pyplot(plt)
-
-
 # Conclusion page
 elif page == "Conclusion":
     st.title("Conclusion and Findings")
@@ -244,3 +308,4 @@ elif page == "Conclusion":
     st.subheader("A Future Forecast of Deaths by Diabetes Type 2 in the MENA Region")
     st.image("https://raw.githubusercontent.com/hadilfs/Healthcare/main/forecastingResult.png", use_column_width=True)
     st.write("""Our forecasting analysis of Type 2 Diabetes mortality rates in the MENA region reveals a notable trend: the forecast indicates that the high levels of mortality observed in recent years are expected to persist into the foreseeable future. The analysis shows that after an initial period of increasing mortality, the rates have stabilized at elevated levels. This suggests that, barring significant public health interventions or changes in risk factors, the high mortality rates associated with Type 2 Diabetes are likely to remain constant in the coming years. Addressing this issue will require sustained efforts and targeted health policies to mitigate the impact and improve long-term outcomes.""")
+
