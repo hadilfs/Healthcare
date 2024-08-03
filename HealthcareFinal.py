@@ -158,7 +158,7 @@ elif page == "Dashboard":
     with col1:
         st.markdown("<h5 style='text-align: center;'>Deaths by Diabetes Type 2 Over Time Globally</h5>", unsafe_allow_html=True)
         mena_data = df1.groupby('year')['val'].sum().reset_index()
-        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        plt.figure(figsize=(plot_width / 90, plot_height / 90))
         plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
         plt.xlabel('Year')
         plt.ylabel('Total Deaths (Percent)')
@@ -169,7 +169,7 @@ elif page == "Dashboard":
         st.markdown("<h5 style='text-align: center;'>Distribution of Deaths by Region</h5>", unsafe_allow_html=True)
         region_distribution = df1.groupby('location')['val'].sum().reset_index()
         region_distribution = region_distribution.sort_values('val', ascending=False)
-        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        plt.figure(figsize=(plot_width / 80, plot_height / 80))
         plt.barh(region_distribution['location'], region_distribution['val'], color='#8B0000')
         plt.xlabel('Total Deaths (Percent)')
         plt.ylabel('Region')
