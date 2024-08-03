@@ -169,7 +169,7 @@ elif page == "Dashboard":
         st.markdown("<h5 style='text-align: center;'>Distribution of Deaths by Region</h5>", unsafe_allow_html=True)
         region_distribution = df1.groupby('location')['val'].sum().reset_index()
         region_distribution = region_distribution.sort_values('val', ascending=False)
-        plt.figure(figsize=(plot_width / 80, plot_height / 80))
+        plt.figure(figsize=(plot_width / 80, plot_height / 100))
         plt.barh(region_distribution['location'], region_distribution['val'], color='#8B0000')
         plt.xlabel('Total Deaths (Percent)')
         plt.ylabel('Region')
@@ -208,7 +208,7 @@ elif page == "Dashboard":
     
     with col5:
         st.markdown("<h5 style='text-align: center;'>Correlation Between Risk Factors and Deaths by Diabetes Type 2</h5>", unsafe_allow_html=True)
-        plt.figure(figsize=(plot_width / 100, plot_height / 100))
+        plt.figure(figsize=(plot_width / 70, plot_height / 100))
         correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
         st.pyplot(plt)
