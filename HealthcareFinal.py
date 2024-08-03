@@ -148,13 +148,17 @@ elif page == "EDA":
 elif page == "Dashboard":
     st.title("Dashboard: Diabetes Type 2 Analysis in the MENA Region")
 
+    # Set the width of the plots
+    plot_width = 800
+    plot_height = 400
+
     # First row of the dashboard with three plots
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns([1, 1, 1])
 
     with col1:
         st.markdown("<h5 style='text-align: center;'>Deaths by Diabetes Type 2 Over Time Globally</h5>", unsafe_allow_html=True)
         mena_data = df1.groupby('year')['val'].sum().reset_index()
-        plt.figure(figsize=(6, 4))
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
         plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
         plt.xlabel('Year')
         plt.ylabel('Total Deaths (Percent)')
@@ -164,7 +168,7 @@ elif page == "Dashboard":
         st.markdown("<h5 style='text-align: center;'>Distribution of Deaths by Region</h5>", unsafe_allow_html=True)
         region_distribution = df1.groupby('location')['val'].sum().reset_index()
         region_distribution = region_distribution.sort_values('val', ascending=False)
-        plt.figure(figsize=(6, 4))
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
         plt.barh(region_distribution['location'], region_distribution['val'], color='#8B0000')
         plt.xlabel('Total Deaths (Percent)')
         plt.ylabel('Region')
@@ -173,14 +177,14 @@ elif page == "Dashboard":
     with col3:
         st.markdown("<h5 style='text-align: center;'>Total Deaths by Year in the MENA Region</h5>", unsafe_allow_html=True)
         mena_data = df.groupby('year')['val'].sum().reset_index()
-        plt.figure(figsize=(6, 4))
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
         plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
         plt.xlabel('Year')
         plt.ylabel('Total Deaths (Percent)')
         st.pyplot(plt)
 
     # Second row of the dashboard with two plots
-    col4, col5 = st.columns(2)
+    col4, col5 = st.columns([1, 1])
 
     with col4:
         st.markdown("<h5 style='text-align: center;'>Distribution of Risk Factors Globally</h5>", unsafe_allow_html=True)
@@ -194,18 +198,19 @@ elif page == "Dashboard":
         )
         fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
         fig.update_layout(
-            width=450,
-            height=400,
+            width=plot_width,
+            height=plot_height,
             margin=dict(t=50, b=50, l=50, r=50)
         )
         st.plotly_chart(fig)
     
     with col5:
         st.markdown("<h5 style='text-align: center;'>Correlation Between Risk Factors and Deaths by Diabetes Type 2</h5>", unsafe_allow_html=True)
-        plt.figure(figsize=(6, 4))
+        plt.figure(figsize=(plot_width / 100, plot_height / 100))
         correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
         st.pyplot(plt)
+
 
 # Conclusion page
 elif page == "Conclusion":
