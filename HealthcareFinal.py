@@ -202,13 +202,13 @@ elif page == "Dashboard":
         fig.update_layout(
             width=plot_width,
             height=plot_height,
-            margin=dict(t=50, b=50, l=50, r=50)
+            margin=dict(t=20, b=20, l=20, r=20)
         )
         st.plotly_chart(fig)
     
     with col5:
         st.markdown("<h5 style='text-align: center;'>Correlation Between Risk Factors and Deaths by Diabetes Type 2</h5>", unsafe_allow_html=True)
-        plt.figure(figsize=(plot_width / 90, plot_height / 120))
+        plt.figure(figsize=(plot_width / 90, plot_height / 100))
         correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
         st.pyplot(plt)
