@@ -146,29 +146,30 @@ elif page == "EDA":
 
 # Dashboard page
 elif page == "Dashboard":
-    st.title("Dashboard")
-    
+    st.title("Dashboard: Diabetes Type 2 Analysis in the MENA Region")
+
+    # First row of the dashboard with three plots
     col1, col2, col3 = st.columns(3)
-    
+
     with col1:
-        st.markdown("<h5 style='text-align: center;'>Deaths by Diabetes Type 2 by Sex</h5>", unsafe_allow_html=True)
+        st.markdown("<h5 style='text-align: center;'>Deaths by Diabetes Type 2 Over Time Globally</h5>", unsafe_allow_html=True)
+        mena_data = df1.groupby('year')['val'].sum().reset_index()
         plt.figure(figsize=(6, 4))
-        sns.boxplot(x='sex', y='val', data=df1, palette=['#8B0000', '#d19999'])
-        plt.xlabel('Sex')
-        plt.ylabel('Deaths (Percent)')
-        plt.yticks([])
+        plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
+        plt.xlabel('Year')
+        plt.ylabel('Total Deaths (Percent)')
         st.pyplot(plt)
     
     with col2:
-        st.markdown("<h5 style='text-align: center;'>Distribution of Deaths by Age Group</h5>", unsafe_allow_html=True)
-        df_sorted = df1.sort_values('age')
+        st.markdown("<h5 style='text-align: center;'>Distribution of Deaths by Region</h5>", unsafe_allow_html=True)
+        region_distribution = df1.groupby('location')['val'].sum().reset_index()
+        region_distribution = region_distribution.sort_values('val', ascending=False)
         plt.figure(figsize=(6, 4))
-        sns.barplot(x='age', y='val', data=df_sorted, color='#8B0000', errorbar=None)
-        plt.xlabel('Age Group')
-        plt.ylabel('Deaths (Percent)')
-        plt.yticks([])
+        plt.barh(region_distribution['location'], region_distribution['val'], color='#8B0000')
+        plt.xlabel('Total Deaths (Percent)')
+        plt.ylabel('Region')
         st.pyplot(plt)
-
+    
     with col3:
         st.markdown("<h5 style='text-align: center;'>Total Deaths by Year in the MENA Region</h5>", unsafe_allow_html=True)
         mena_data = df.groupby('year')['val'].sum().reset_index()
@@ -176,38 +177,38 @@ elif page == "Dashboard":
         plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
         plt.xlabel('Year')
         plt.ylabel('Total Deaths (Percent)')
-        plt.yticks([])
-        plt.grid(False)
         st.pyplot(plt)
-    
+
+    # Second row of the dashboard with two plots
     col4, col5 = st.columns(2)
-    
+
     with col4:
-        st.markdown("<h5 style='text-align: center;'>Distribution of Deaths by Region</h5>", unsafe_allow_html=True)
-        region_distribution = df1.groupby('location')['val'].sum().reset_index()
-        region_distribution = region_distribution.sort_values('val', ascending=False)
-        plt.figure(figsize=(8, 4))
-        plt.barh(region_distribution['location'], region_distribution['val'], color='#8B0000')
-        plt.xlabel('Total Deaths (Percent)')
-        plt.ylabel('Region')
-        plt.xticks([])
-        st.pyplot(plt)
+        st.markdown("<h5 style='text-align: center;'>Distribution of Risk Factors Globally</h5>", unsafe_allow_html=True)
+        risk_factors = df1.groupby('rei')['val'].sum().reset_index()
+        fig = px.treemap(
+            risk_factors,
+            path=['rei'],
+            values='val',
+            title='Distribution of Risk Factors Globally',
+            color='val',
+            color_continuous_scale='Reds'
+        )
+        fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
+        fig.update_layout(
+            width=450,
+            height=400,
+            margin=dict(t=50, b=50, l=50, r=50)
+        )
+        st.plotly_chart(fig)
     
     with col5:
-        st.markdown("<h5 style='text-align: center;'>Distribution of Deaths by Country in the MENA Region</h5>", unsafe_allow_html=True)
-        country_distribution = df.groupby('location')['val'].sum().reset_index()
-        country_distribution = country_distribution.sort_values('val', ascending=False)
-        num_colors = len(country_distribution)
-        colors = plt.cm.Reds([i / num_colors for i in range(num_colors)])
-        plt.figure(figsize=(8, 4))
-        plt.pie(
-            country_distribution['val'], 
-            labels=country_distribution['location'], 
-            colors=colors, 
-            startangle=140
-        )
-        plt.axis('equal')
+        st.markdown("<h5 style='text-align: center;'>Correlation Between Risk Factors and Deaths by Diabetes Type 2</h5>", unsafe_allow_html=True)
+        plt.figure(figsize=(6, 4))
+        correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
+        sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+        plt.title('Correlation Between Risk Factors and Deaths by Diabetes Type 2')
         st.pyplot(plt)
+
 # Conclusion page
 elif page == "Conclusion":
     st.title("Conclusion and Findings")
