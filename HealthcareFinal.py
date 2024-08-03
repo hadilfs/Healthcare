@@ -200,8 +200,8 @@ elif page == "Dashboard":
         )
         fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
         fig.update_layout(
-            width=1600,
-            height=250,
+            width=1700,
+            height=200,
             margin=dict(t=20, b=20, l=20, r=20)
         )
         st.plotly_chart(fig)
