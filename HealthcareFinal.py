@@ -162,6 +162,7 @@ elif page == "Dashboard":
         plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
         plt.xlabel('Year')
         plt.ylabel('Total Deaths (Percent)')
+        plt.yticks([])
         st.pyplot(plt)
     
     with col2:
@@ -181,6 +182,7 @@ elif page == "Dashboard":
         plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
         plt.xlabel('Year')
         plt.ylabel('Total Deaths (Percent)')
+        plt.yticks([])
         st.pyplot(plt)
 
     # Second row of the dashboard with two plots
