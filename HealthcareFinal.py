@@ -10,6 +10,9 @@ import seaborn as sns
 import plotly.express as px
 import streamlit as st
 
+# Set the max message size (in MB)
+st.set_option('server.maxMessageSize', 250)
+
 # Load your data
 df = pd.read_csv("https://raw.githubusercontent.com/hadilfs/Healthcare/main/combined_data.csv")
 df = df[df['val'] > 0]
