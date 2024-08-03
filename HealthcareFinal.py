@@ -1,10 +1,10 @@
-# Load your data
-import pandas as pd
+
 import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 
+# Load your data
 df = pd.read_csv("https://raw.githubusercontent.com/hadilfs/Healthcare/main/combined_data.csv")
 df = df[df['val'] > 0]
 
@@ -144,7 +144,6 @@ elif page == "EDA":
     plt.axis('equal')
     st.pyplot(plt)
 
-
 # Dashboard page
 elif page == "Dashboard":
     st.title("Dashboard")
@@ -171,13 +170,14 @@ elif page == "Dashboard":
         st.pyplot(plt)
 
     with col3:
-        st.markdown("<h5 style='text-align: center;'>Global Trend of Deaths by Diabetes Type 2</h5>", unsafe_allow_html=True)
-        mena_data = df1.groupby('year')['val'].sum().reset_index()
+        st.markdown("<h5 style='text-align: center;'>Total Deaths by Year in the MENA Region</h5>", unsafe_allow_html=True)
+        mena_data = df.groupby('year')['val'].sum().reset_index()
         plt.figure(figsize=(6, 4))
         plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
         plt.xlabel('Year')
         plt.ylabel('Total Deaths (Percent)')
         plt.yticks([])
+        plt.grid(False)
         st.pyplot(plt)
     
     col4, col5 = st.columns(2)
@@ -208,7 +208,6 @@ elif page == "Dashboard":
         )
         plt.axis('equal')
         st.pyplot(plt)
-
 # Conclusion page
 elif page == "Conclusion":
     st.title("Conclusion and Findings")
