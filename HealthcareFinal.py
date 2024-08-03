@@ -91,7 +91,7 @@ elif page == "EDA":
     st.subheader("Distribution of Deaths by Region")
     region_distribution = df1.groupby('location')['val'].sum().reset_index()
     region_distribution = region_distribution.sort_values('val', ascending=False)
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(10, 8))
     plt.barh(region_distribution['location'], region_distribution['val'], color='#8B0000')
     plt.xlabel('Total Deaths (Percent)')
     plt.ylabel('Region')
@@ -150,7 +150,7 @@ elif page == "Dashboard":
 
     # Set the width of the plots
     plot_width = 900
-    plot_height = 400
+    plot_height = 600
 
     # First row of the dashboard with three plots
     col1, col2, col3 = st.columns([1, 1, 1])
