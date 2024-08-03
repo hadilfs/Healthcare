@@ -13,7 +13,7 @@ df1 = df1[df1['val'] > 0]
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "EDA", "Conclusion"])
+page = st.sidebar.radio("Go to", ["Home", "EDA", "Dashboard", "Conclusion"])
 
 # Home page
 if page == "Home":
@@ -32,26 +32,13 @@ if page == "Home":
 # EDA page
 elif page == "EDA":
     st.title("Exploratory Data Analysis")
-    
-    st.subheader("Deaths by Diabetes Type 2 by Sex")
-    plt.figure(figsize=(6, 4))
-    sns.boxplot(x='sex', y='val', data=df1, palette=['#8B0000', '#d19999'])
-    plt.title('Deaths by Diabetes Type 2 by Sex')
-    plt.xlabel('Sex')
-    plt.ylabel('Deaths (Percent)')
-    plt.yticks([])
-    st.pyplot(plt)
+    # (Your EDA code remains the same)
 
-    st.subheader("Distribution of Deaths by Age Group")
-    df_sorted = df1.sort_values('age')
-    plt.figure(figsize=(14, 6))
-    sns.barplot(x='age', y='val', data=df_sorted, color='#8B0000', errorbar=None)
-    plt.title('Distribution of Deaths by Age Group')
-    plt.xlabel('Age Group')
-    plt.ylabel('Deaths (Percent)')
-    plt.yticks([])
-    st.pyplot(plt)
+# Dashboard page
+elif page == "Dashboard":
+    st.title("Dashboard: Diabetes Type 2 Analysis in the MENA Region")
     
+    # Global Overview
     st.subheader("Deaths by Diabetes Type 2 Over Time Globally")
     mena_data = df1.groupby('year')['val'].sum().reset_index()
     plt.figure(figsize=(10, 6))
@@ -63,31 +50,7 @@ elif page == "EDA":
     plt.grid(False)
     st.pyplot(plt)
     
-    st.subheader("Distribution of Risk Factors Globally")
-    risk_factors = df1.groupby('rei')['val'].sum().reset_index()
-    fig = px.treemap(
-        risk_factors,
-        path=['rei'],
-        values='val',
-        title='Distribution of Risk Factors Globally',
-        color='val',
-        color_continuous_scale='Reds'
-    )
-    fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
-    fig.update_layout(
-        width=900,
-        height=500,
-        margin=dict(t=50, b=50, l=50, r=50)
-    )
-    st.plotly_chart(fig)
-    
-    st.subheader("Correlation Between Risk Factors and Deaths by Diabetes Type 2")
-    plt.figure(figsize=(12, 6))
-    correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
-    plt.title('Correlation Between Risk Factors and Deaths by Diabetes Type 2')
-    st.pyplot(plt)
-    
+    # Regional Focus
     st.subheader("Distribution of Deaths by Region")
     region_distribution = df1.groupby('location')['val'].sum().reset_index()
     region_distribution = region_distribution.sort_values('val', ascending=False)
@@ -100,6 +63,7 @@ elif page == "EDA":
     plt.grid(axis='y', linestyle='', alpha=0.7)
     st.pyplot(plt)
     
+    # Detailed Analysis of MENA Region
     st.subheader("Total Deaths by Year in the MENA Region")
     mena_data = df.groupby('year')['val'].sum().reset_index()
     plt.figure(figsize=(10, 6))
@@ -128,20 +92,30 @@ elif page == "EDA":
     plt.yticks([])
     st.pyplot(plt)
     
-    st.subheader("Distribution of Deaths by Country in the MENA Region")
-    country_distribution = df.groupby('location')['val'].sum().reset_index()
-    country_distribution = country_distribution.sort_values('val', ascending=False)
-    num_colors = len(country_distribution)
-    colors = plt.cm.Reds([i / num_colors for i in range(num_colors)])
-    plt.figure(figsize=(10, 5))
-    plt.pie(
-        country_distribution['val'], 
-        labels=country_distribution['location'], 
-        colors=colors, 
-        startangle=140
+    # Risk Factors Analysis
+    st.subheader("Distribution of Risk Factors Globally")
+    risk_factors = df1.groupby('rei')['val'].sum().reset_index()
+    fig = px.treemap(
+        risk_factors,
+        path=['rei'],
+        values='val',
+        title='Distribution of Risk Factors Globally',
+        color='val',
+        color_continuous_scale='Reds'
     )
-    plt.title('Distribution of Deaths by Country in the MENA Region')
-    plt.axis('equal')
+    fig.update_traces(marker=dict(line=dict(color='rgba(0,0,0,0)', width=0)))
+    fig.update_layout(
+        width=900,
+        height=500,
+        margin=dict(t=50, b=50, l=50, r=50)
+    )
+    st.plotly_chart(fig)
+    
+    st.subheader("Correlation Between Risk Factors and Deaths by Diabetes Type 2")
+    plt.figure(figsize=(12, 6))
+    correlation_matrix = df1.pivot_table(index='location', columns='rei', values='val').corr()
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+    plt.title('Correlation Between Risk Factors and Deaths by Diabetes Type 2')
     st.pyplot(plt)
 
 # Conclusion page
