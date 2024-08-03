@@ -149,7 +149,7 @@ elif page == "Dashboard":
     st.title("Dashboard: Diabetes Type 2 Analysis in the MENA Region")
 
     # Set the width of the plots
-    plot_width = 800
+    plot_width = 900
     plot_height = 400
 
     # First row of the dashboard with three plots
