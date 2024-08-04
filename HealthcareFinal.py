@@ -52,6 +52,7 @@ elif page == "EDA":
     plt.ylabel('Deaths (Percent)')
     plt.yticks([])
     st.pyplot(plt)
+    st.write("The lack of a notable shift between the two boxplots indicates that there isn’t a strong association between sex and the percentage of deaths due to diabetes type 2 in the data provided. Both males and females appear to be equally impacted by diabetes type 2 in terms of mortality. This suggests that interventions and policies aimed at reducing diabetes-related deaths should be gender-neutral, focusing on broader population health strategies rather than targeting one gender over the other.")
 
     st.subheader("Distribution of Deaths by Age Group Globally")
     df_sorted = df1.sort_values('age')
@@ -62,6 +63,7 @@ elif page == "EDA":
     plt.ylabel('Deaths (Percent)')
     plt.yticks([])
     st.pyplot(plt)
+    st.write("The age group 20-24 years has the highest percentage of deaths due to Type 2 diabetes, significantly higher than any other age group. All other age groups have relatively similar and lower percentages, showing a consistent distribution across ages above 25 years.")
     
     st.subheader("Deaths by Diabetes Type 2 Over Time Globally")
     mena_data = df1.groupby('year')['val'].sum().reset_index()
@@ -73,6 +75,7 @@ elif page == "EDA":
     plt.yticks([])
     plt.grid(False)
     st.pyplot(plt)
+    st.write(" The overall upward trend indicates a growing global health burden of Type 2 diabetes. The dip in 2018 might be attributed to underreporting, changes in data collection methods, or temporary improvements in diabetes management. The sharp rise post-2018 highlights the resurgence of diabetes-related complications or potential impacts of external factors such as pandemics affecting diabetic patients.")
     
     st.subheader("Distribution of Deaths by Region")
     region_distribution = df1.groupby('location')['val'].sum().reset_index()
@@ -84,8 +87,13 @@ elif page == "EDA":
     plt.xticks([])
     plt.grid(axis='y', linestyle='', alpha=0.7)
     st.pyplot(plt)
-
-    st.subheader("Total Deaths by Year in the MENA Region")
+    st.write("1. North America leads with the highest percentage of deaths due to Type 2 diabetes, highlighting the severe impact of this disease in a region known for high obesity rates and sedentary lifestyles.
+    2. North Africa and the Middle East (MENA) also have a substantial percentage, reflecting the region's growing diabetes burden, likely driven by urbanization, lifestyle changes, and dietary factors.
+    3. Europe & Central Asia and Latin America and the Caribbean follow closely, indicating that diabetes is a significant health issue in both developed and developing countries.
+    4. East Asia and Sub-Saharan Africa show lower percentages, but these figures may still represent significant public health challenges given the large populations and varying access to healthcare in these regions.
+    5. South Asia has the lowest percentage, though diabetes remains a critical issue there, particularly due to genetic predispositions and rapid changes in lifestyle.")
+    
+    st.subheader("Total Deaths Over the Years in the MENA Region")
     mena_data = df.groupby('year')['val'].sum().reset_index()
     plt.figure(figsize=(10, 6))
     plt.plot(mena_data['year'], mena_data['val'], marker='o', linestyle='-', color='#8B0000')
@@ -94,6 +102,7 @@ elif page == "EDA":
     plt.yticks([])
     plt.grid(False)
     st.pyplot(plt)
+    st.write("The analysis of the above line chart reveals a concerning increase in the percentage of deaths attributable to Type 2 diabetes across the MENA region. This trend suggests a growing burden of the disease, likely driven by lifestyle changes, urbanization, and the rising prevalence of obesity—a known risk factor for Type 2 diabetes. The continuous upward trajectory in mortality rates emphasizes the need for urgent interventions to curb the rising tide of diabetes-related deaths.")
 
     st.subheader("Trends in Deaths by Diabetes Type 2 Over Time in Each MENA Region Country")
     plt.figure(figsize=(16, 12))
@@ -167,7 +176,8 @@ elif page == "EDA":
 
     # Display the map
     st_folium(m, width=700, height=500)
-
+    st.write("This choropleth map visually represents the mortality rates due to Diabetes Type 2 across different countries in the MENA region. The varying shades of red indicate the severity of the mortality rates, with darker shades representing higher percentages of deaths attributed to the disease. The map highlights Kuwait as having the highest mortality rate, followed by countries like Saudi Arabia, Egypt, and Iraq, which also show significant rates. This suggests that these nations face substantial challenges in managing and preventing Diabetes Type 2, making them critical targets for public health interventions.")
+    
     st.subheader("Distribution of Risk Factors in the MENA Region")
     risk_factors = df.groupby('rei')['val'].sum().reset_index()
     fig = px.treemap(
@@ -184,12 +194,14 @@ elif page == "EDA":
         margin=dict(t=50, b=50, l=50, r=50)
     )
     st.plotly_chart(fig)
+    st.write("This treemap visualization provides a clear overview of the predominant risk factors contributing to Diabetes Type 2 mortality in the MENA region. The size of each box represents the relative impact of each risk factor. Notably, a high body-mass index stands out as the most significant contributor, followed by poor dietary habits like a diet low in whole grains. This visualization underscores the critical areas for public health intervention to reduce the burden of Diabetes Type 2 in the region.")
     
     st.subheader("Correlation Between Risk Factors in the MENA Region")
     plt.figure(figsize=(12, 6))
     correlation_matrix = df.pivot_table(index='location', columns='rei', values='val').corr()
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
     st.pyplot(plt)
+    st.write("The heatmap illustrates the correlations between various risk factors associated with Diabetes Type 2 in the MENA region. Strong positive correlations are highlighted in red, while strong negative correlations are in blue. For instance, a high body-mass index is positively correlated with other poor dietary choices, such as a diet high in sugar-sweetened beverages and red meat. Understanding these correlations is crucial for designing comprehensive strategies that address multiple risk factors simultaneously, thereby enhancing the effectiveness of public health interventions.")
     
 
 # Dashboard page
