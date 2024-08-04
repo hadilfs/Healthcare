@@ -87,11 +87,11 @@ elif page == "EDA":
     plt.xticks([])
     plt.grid(axis='y', linestyle='', alpha=0.7)
     st.pyplot(plt)
-    st.write("1. North America leads with the highest percentage of deaths due to Type 2 diabetes, highlighting the severe impact of this disease in a region known for high obesity rates and sedentary lifestyles.
-    2. North Africa and the Middle East (MENA) also have a substantial percentage, reflecting the region's growing diabetes burden, likely driven by urbanization, lifestyle changes, and dietary factors.
-    3. Europe & Central Asia and Latin America and the Caribbean follow closely, indicating that diabetes is a significant health issue in both developed and developing countries.
-    4. East Asia and Sub-Saharan Africa show lower percentages, but these figures may still represent significant public health challenges given the large populations and varying access to healthcare in these regions.
-    5. South Asia has the lowest percentage, though diabetes remains a critical issue there, particularly due to genetic predispositions and rapid changes in lifestyle.")
+    st.write("1. North America leads with the highest percentage of deaths due to Type 2 diabetes, highlighting the severe impact of this disease in a region known for high obesity rates and sedentary lifestyles.")
+    st.write("2. North Africa and the Middle East (MENA) also have a substantial percentage, reflecting the region's growing diabetes burden, likely driven by urbanization, lifestyle changes, and dietary factors.")
+    st.write("3. Europe & Central Asia and Latin America and the Caribbean follow closely, indicating that diabetes is a significant health issue in both developed and developing countries.")
+    st.write("4. East Asia and Sub-Saharan Africa show lower percentages, but these figures may still represent significant public health challenges given the large populations and varying access to healthcare in these regions.")
+    st.write("5. South Asia has the lowest percentage, though diabetes remains a critical issue there, particularly due to genetic predispositions and rapid changes in lifestyle.")
     
     st.subheader("Total Deaths Over the Years in the MENA Region")
     mena_data = df.groupby('year')['val'].sum().reset_index()
