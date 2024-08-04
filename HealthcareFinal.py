@@ -260,6 +260,26 @@ elif page == "Dashboard":
         correlation_matrix = df.pivot_table(index='location', columns='rei', values='val').corr()
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
         st.pyplot(plt)
+    # Analysis sections
+    st.subheader("Global Perspective")
+    st.write("""
+    The global analysis of Diabetes Type 2 mortality rates over the past decade shows a concerning trend. Despite some fluctuations, there's an overall upward trajectory, highlighting the increasing burden of this chronic disease worldwide. Regions like North America and North Africa & the Middle East are particularly impacted, suggesting that these areas face significant challenges in managing and preventing Diabetes Type 2.
+    """)
+    
+    st.subheader("MENA Region Focus")
+    st.write("""
+    In the MENA region, the situation is even more alarming. The consistent rise in deaths from Diabetes Type 2 over the years underscores a growing public health crisis. This trend may be driven by various socio-economic factors, lifestyle changes, and the increasing prevalence of risk factors such as high body mass index, poor dietary habits, and physical inactivity.
+    """)
+    
+    st.subheader("Risk Factor Analysis")
+    st.write("""
+    The risk factor analysis within the MENA region reveals critical insights. High body mass index and a diet low in whole grains are the leading contributors to Diabetes Type 2 mortality. These findings suggest that addressing obesity and improving dietary habits could significantly reduce the disease's impact in the region. Additionally, the correlation analysis of risk factors highlights how interconnected these health determinants are—underscoring the need for comprehensive, multi-faceted public health strategies.
+    """)
+    
+    st.subheader("Conclusion")
+    st.write("""
+    Overall, the dashboard paints a clear picture of the growing diabetes crisis, especially in the MENA region. The rising mortality rates, coupled with the significant role of preventable risk factors, call for urgent and coordinated public health interventions. Efforts must focus on promoting healthier lifestyles, improving access to healthcare, and implementing targeted prevention programs to curb the impact of Diabetes Type 2.
+    """)
 # Conclusion page
 elif page == "Conclusion":
     st.title("Conclusion and Findings")
